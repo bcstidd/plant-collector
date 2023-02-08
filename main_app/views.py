@@ -37,7 +37,7 @@ def add_thirsty(request, plant_id):
 
 class PlantCreate(CreateView):
     model = Plant
-    fields = ['name' 'category', 'thrivesIn', 'difficulty' ]
+    fields = ['name', 'category', 'thrivesIn', 'difficulty' ]
     success_url = '/plants'
 
 class PlantUpdate(UpdateView):
