@@ -28,10 +28,7 @@ def plants_detail(request, plant_id):
 
 def add_thirsty(request, plant_id):
     form = ThirstyForm(request.POST)
-  # validate the form
     if form.is_valid():
-    # don't save the form to the db until it
-    # has the cat_id assigned
         new_thirsty = form.save(commit=False)
         new_thirsty.plant_id = plant_id
         new_thirsty.save()
@@ -40,7 +37,7 @@ def add_thirsty(request, plant_id):
 
 class PlantCreate(CreateView):
     model = Plant
-    fields = ['name' 'category', 'thrivesin', 'difficulty' ]
+    fields = ['name' 'category', 'thrivesIn', 'difficulty' ]
     success_url = '/plants'
 
 class PlantUpdate(UpdateView):
@@ -71,10 +68,10 @@ class AdmirerDelete(DeleteView):
   success_url = '/admirers'
 
 def assoc_admirer(request, plant_id, admirer_id):
-    Plant.objects.get(id=plant_id.admirers.add(admirer_id))
+    Plant.objects.get(id=plant_id).admirers.add(admirer_id)
     return redirect('detail', plant_id=plant_id)
 
 def disassoc_admirer(request, plant_id, admirer_id):
-    Plant.objects.get(id=plant_id.admirers.remove(admirer_id))
+    Plant.objects.get(id=plant_id).admirers.remove(admirer_id)
     return redirect('detail', plant_id=plant_id)
 

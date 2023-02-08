@@ -47,11 +47,13 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title">
-              A {{ admirer.name }}
+               {{ admirer.name }}
             </span>
           </div>
+          {{ admirer.location }}
+
           <div class="card-action">
-            <form action="{% url 'disassoc_toy' cat.id toy.id %}" method="POST">
+            <form action="{% url 'disassoc_admirer' plant.id admirer.id %}" method="POST">
               {% csrf_token %}
               <button type="submit" class="btn">Remove</button>
             </form> 
@@ -69,7 +71,7 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title">
-              A {{ admirer.name }}
+               {{ admirer.name }}
             </span>
           </div>
           <div class="card-action">
@@ -82,7 +84,6 @@
         <div class="card-action">
             <form action="{% url 'assoc_admirer' plant.id admirer.id %}" method="POST">
                 {% csrf_token %}
-              <button type="submit" class="btn">Add</button>
             </form>
           </div>
 
