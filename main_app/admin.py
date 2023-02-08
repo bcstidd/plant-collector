@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
-from .models import Plant
+from .models import Plant, Thirsty
 
 admin.site.register(Plant)
+# register the new Feeding Model 
+admin.site.register(Thirsty)
