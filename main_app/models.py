@@ -8,14 +8,28 @@ DRINKS = (
 )
 
 # Create your models here.
+class Admirer(models.Model):
+    name = models.TextField(max_length=50)
+    location = models.TextField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('admirers_detail', kwargs={'pk': self.id})
+
 class Plant(models.Model):
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     thrivesIn = models.CharField(max_length=250)
     difficulty = models.CharField(max_length=250)
+    admirers = models.ManyToManyField(Admirer)
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'plant_id': self.id})
 
 class Thirsty(models.Model):
     date = models.DateField('Date Watered')

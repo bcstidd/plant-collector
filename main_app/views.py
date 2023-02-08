@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView 
-from .models import Plant
+from django.views.generic import ListView, DetailView
+from .models import Plant, Admirer
 from .forms import ThirstyForm
 # Create your views here.
 
@@ -18,8 +19,12 @@ def plants_index(request):
 
 def plants_detail(request, plant_id):
     plant = Plant.objects.get(id=plant_id)
+    id_list = plant.admirers.all().values_list('id')
+    unassigned_admirers = Admirer.objects.exclude(id__in=id_list)
     thirsty_form = ThirstyForm()
-    return render(request, 'plants/detail.html', {'plant': plant, 'thirsty_form': thirsty_form})
+    return render(request, 'plants/detail.html', {'plant': plant, 'thirsty_form': thirsty_form,
+    'plant': plant, 'thirsty_form': thirsty_form, 'admirers': unassigned_admirers
+    })
 
 def add_thirsty(request, plant_id):
     form = ThirstyForm(request.POST)
@@ -35,7 +40,7 @@ def add_thirsty(request, plant_id):
 
 class PlantCreate(CreateView):
     model = Plant
-    fields = '__all__'
+    fields = ['name' 'category', 'thrivesin', 'difficulty' ]
     success_url = '/plants'
 
 class PlantUpdate(UpdateView):
@@ -45,3 +50,31 @@ class PlantUpdate(UpdateView):
 class PlantDelete(DeleteView):
     model = Plant
     success_url = '/plants'
+
+
+class AdmirerList(ListView):
+  model = Admirer
+
+class AdmirerDetail(DetailView):
+  model = Admirer
+
+class AdmirerCreate(CreateView):
+  model = Admirer
+  fields = '__all__'
+
+class AdmirerUpdate(UpdateView):
+  model = Admirer
+  fields = ['name', 'color']
+
+class AdmirerDelete(DeleteView):
+  model = Admirer
+  success_url = '/admirers'
+
+def assoc_admirer(request, plant_id, admirer_id):
+    Plant.objects.get(id=plant_id.admirers.add(admirer_id))
+    return redirect('detail', plant_id=plant_id)
+
+def disassoc_admirer(request, plant_id, admirer_id):
+    Plant.objects.get(id=plant_id.admirers.remove(admirer_id))
+    return redirect('detail', plant_id=plant_id)
+
