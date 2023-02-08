@@ -61,7 +61,7 @@ class AdmirerCreate(CreateView):
 
 class AdmirerUpdate(UpdateView):
   model = Admirer
-  fields = ['name', 'color']
+  fields = ['name', 'location']
 
 class AdmirerDelete(DeleteView):
   model = Admirer
