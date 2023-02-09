@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<body class="fans-list">
 <h1>Admirer List</h1>
 
 {% for admirer in admirer_list %}
   <a href="{% url 'admirers_detail' admirer.id %}">
-    <div class="card">
-        <div class="card-content">
+    <div class="fan-card">
+        <div class="fan-card-content">
             <span class="card-title">{{ admirer.name }}</span>
             <p>Location {{ admirer.location }}</p>
         </div>
     </div>
   </a>
 {% endfor %}
-
+</body>
 {% endblock %}
